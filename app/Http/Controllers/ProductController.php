@@ -19,7 +19,7 @@ class ProductController extends Controller
         $this->productRepo = $productRepo;
         $this->categoryRepo = $categoryRepo;
     }
-
+//main page
     public function index()
     {
         $products = $this->productRepo->all();
@@ -30,13 +30,13 @@ class ProductController extends Controller
             'categories' => $categories,
         ]);
     }
-
+//the creation form
     public function create()
     {
         $categories = $this->categoryRepo->all();
         return Inertia::render('Product/create', compact('categories'));
     }
-
+//save the product in database
     public function store(Request $request)
     {
         $request->validate([
@@ -48,6 +48,7 @@ class ProductController extends Controller
         $this->productRepo->create($request);
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
+//Filter the product By Category
     public function FilterByCategory(Category $category){
         $categories = $this->categoryRepo->all();
            $products = $this->productRepo->getProductByCategory($category);
@@ -56,6 +57,7 @@ class ProductController extends Controller
             'categories' =>$categories
         ]);
     }
+//Sort The product By  price and name
     public function OrderBy($column,$direction){
         $categories = $this->categoryRepo->all();
 

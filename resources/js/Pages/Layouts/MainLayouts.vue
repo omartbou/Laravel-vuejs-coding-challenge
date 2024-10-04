@@ -13,9 +13,7 @@
                     <li class="nav-item">
                         <Link class="nav-link" href="/products/create"><i class="fas fa-pencil"></i>Create Products</Link>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                    </li>
+
                 </ul>
 
             </div>

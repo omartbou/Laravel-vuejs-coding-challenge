@@ -6,9 +6,9 @@
                     Filter By Category
                 </button>
                 <ul class="dropdown-menu" >
-                    <li><a class="dropdown-item" href="#">All</a></li>
+                    <li><a class="dropdown-item" href="/products">All</a></li>
                     <li v-for="category in categories" :key="category.id">
-                        <Link class="dropdown-item" :href="`/category/${category.id}/product`"> {{ category.name }}</Link>
+                        <Link class="dropdown-item" :href="`/${category.id}`"> {{ category.name }}</Link>
                     </li>
                 </ul>
             </div>
