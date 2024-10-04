@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/products', [ProductController::class,'index']);
+Route::get('/products', [ProductController::class,'index'])->name('products.index');
+Route::get('/add', [ProductController::class,'create']);
+Route::post('/post', [ProductController::class,'store']);
 Route::get('/{category}',[ProductController::class,'FilterByCategory'])->name('category.product');
 Route::get('/order/{column}/{direction}/products',[ProductController::class,'OrderBy'])->name('orderBy');
