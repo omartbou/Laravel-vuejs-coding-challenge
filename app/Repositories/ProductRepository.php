@@ -1,42 +1,62 @@
 <?php
-namespace App\Services;
+namespace App\Repositories;
 
-use App\Models\Basket;
-use App\Models\BasketItem;
+use App\Models\Category;
 use App\Models\Product;
 
-class ProductRepository implements ProductInterface{
+class ProductRepository implements ProductRepositoryInterface{
 
 
-    public function productList($sortBy = null, $categoryId = null){
-        $query = Product::query();
-        if ($categoryId) {
-            $query->whereHas('categories', function($q) use ($categoryId) {
-                $q->where('id', $categoryId);
-            });
-        }
-
-        if ($sortBy) {
-            $query->orderBy('price', $sortBy);
-        }
-
-        return $query->get();
+    public function all()
+    {
+        return Product::with('categories')
+            ->paginate(10);
     }
 
-
-
-    public function createProduct($request){
-        if($request){
-            $product = new Product();
-            $product->name = $request->name;
-            $product->description = $request->description;
-            $product->price = $request->price;
-            $product->image = $request->image;
-            $product->save();
-            return $product; // Return the created product
-
-        }
-        return null;
+    public function find($id)
+    {
+        return Product::find($id);
     }
 
+    public function create($request)
+    {
+     if($request){
+         $product = new Product();
+         $product->name = $request->name;
+         $product->description = $request->description;
+         $product->price = $request->price;
+         if ($request->hasFile('image')) {
+             $image = $request->file('image');
+             $imageName = time() . '.' . $image->getClientOriginalExtension();
+             $image->move(public_path('images'), $imageName);
+             $product->image = 'images/' . $imageName;
+         }
+        if($product->save()) {
+            if ($request->has('categories')) {
+                $product->categories()->attach($request->categories);
+            }
+        }
+        return $product;
+     }
+     return null;
+    }
+
+    public function update($id, array $data)
+    {
+        $product = $this->find($id);
+        $product->update($data);
+        return $product;
+    }
+
+    public function delete($id)
+    {
+        $product = $this->find($id);
+        return $product ? $product->delete() : false;
+    }
+
+    public function getProductByCategory(Category $category){
+        $products = $category->products()->with('category')->paginate(5);
+        return $products;
+
+    }
 }

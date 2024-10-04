@@ -1,10 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories;
+
+use App\Models\Category;
 
 interface ProductRepositoryInterface {
 
-    public function productList($sortBy = null, $categoryId = null);
-    public function createProduct($request);
+    public function all();
+    public function find($id);
+    public function create($request);
+    public function delete($id);
+    public function update($id, array $data);
+    public function getProductByCategory(Category $category);
 
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
-use App\Services\CategoryRepositoryInterface;
-use App\Services\ProductRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
+use App\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
@@ -23,7 +25,7 @@ class ProductController extends Controller
         $products = $this->productRepo->all($request->only('sort', 'category'));
         $categories = $this->categoryRepo->all();
 
-        return Inertia::render('Products/Index', [
+        return Inertia::render('Product/index', [
             'products' => $products,
             'categories' => $categories,
             'filters' => $request->only(['sort', 'category']),
@@ -33,7 +35,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = $this->categoryRepo->all();
-        return Inertia::render('Products/Create', compact('categories'));
+        return Inertia::render('Product/create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -44,19 +46,16 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'image' => 'required|image',
         ]);
-
-        $path = $request->file('image')->store('images');
-
-        $product = $this->productRepo->create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image' => $path,
-        ]);
-
-        $product->categories()->attach($request->categories);
-
+        $this->productRepo->create($request);
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
+    }
+    public function FilterByCategory(Category $category){
+        $categories = $this->categoryRepo->all();
+           $products = $this->productRepo->getProductByCategory($category);
+        return Inertia::render('Product/index',[
+            'products' => $products,
+            'categories' =>$categories
+        ]);
     }
 
     }

@@ -1,10 +1,14 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Repositories;
 
 interface CategoryRepositoryInterface
 {
-
+    public function all();
+    public function find($id);
+    public function create(array $data);
+    public function delete($id);
+    public function update($id, array $data);
 
 }
