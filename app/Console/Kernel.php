@@ -24,4 +24,10 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+    protected $commands = [
+        Commands\CreateCategory::class,
+        Commands\DeleteCategory::class,
+        Commands\CreateProduct::class,
+        Commands\DeleteProduct::class,
+    ];
 }

@@ -20,15 +20,14 @@ class ProductController extends Controller
         $this->categoryRepo = $categoryRepo;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $products = $this->productRepo->all($request->only('sort', 'category'));
+        $products = $this->productRepo->all();
         $categories = $this->categoryRepo->all();
 
         return Inertia::render('Product/index', [
             'products' => $products,
             'categories' => $categories,
-            'filters' => $request->only(['sort', 'category']),
         ]);
     }
 
@@ -52,6 +51,15 @@ class ProductController extends Controller
     public function FilterByCategory(Category $category){
         $categories = $this->categoryRepo->all();
            $products = $this->productRepo->getProductByCategory($category);
+        return Inertia::render('Product/index',[
+            'products' => $products,
+            'categories' =>$categories
+        ]);
+    }
+    public function OrderBy($column,$direction){
+        $categories = $this->categoryRepo->all();
+
+        $products=$this->productRepo->sortBy($column,$direction);
         return Inertia::render('Product/index',[
             'products' => $products,
             'categories' =>$categories

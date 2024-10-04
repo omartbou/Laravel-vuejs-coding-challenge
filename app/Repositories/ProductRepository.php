@@ -9,8 +9,8 @@ class ProductRepository implements ProductRepositoryInterface{
 
     public function all()
     {
-        return Product::with('categories')
-            ->paginate(10);
+        return Product::with('categories')->paginate(5);
+
     }
 
     public function find($id)
@@ -28,8 +28,10 @@ class ProductRepository implements ProductRepositoryInterface{
          if ($request->hasFile('image')) {
              $image = $request->file('image');
              $imageName = time() . '.' . $image->getClientOriginalExtension();
-             $image->move(public_path('images'), $imageName);
-             $product->image = 'images/' . $imageName;
+
+             $imagePath = $image->storeAs('images', $imageName, 'public');
+
+             $product->image = 'storage/' . $imagePath;
          }
         if($product->save()) {
             if ($request->has('categories')) {
@@ -41,21 +43,18 @@ class ProductRepository implements ProductRepositoryInterface{
      return null;
     }
 
-    public function update($id, array $data)
-    {
-        $product = $this->find($id);
-        $product->update($data);
-        return $product;
-    }
-
-    public function delete($id)
-    {
-        $product = $this->find($id);
-        return $product ? $product->delete() : false;
-    }
 
     public function getProductByCategory(Category $category){
-        $products = $category->products()->with('category')->paginate(5);
+        $products = $category->products()->with('categories')->paginate(5);
+        return $products;
+
+    }
+    public function sortBy($column,$direction){
+        $validColumns = ['price', 'name'];
+        if (!in_array($column, $validColumns)) {
+            return redirect()->route('products.index');
+        }
+        $products =Product::with('categories')->orderBy($column,$direction)->paginate(5);
         return $products;
 
     }

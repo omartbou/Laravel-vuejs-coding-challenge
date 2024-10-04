@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
+Route::get('category/{category}/product',[ProductController::class,'FilterByCategory'])->name('category.product');
+Route::get('order/{column}/{direction}/products',[ProductController::class,'OrderBy'])->name('orderBy');

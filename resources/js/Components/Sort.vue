@@ -3,21 +3,22 @@
         <div class="card-body d-flex justify-content-center">
             <div class="dropdown">
                 <button class="btn btn-success dropdown-toggle"   data-bs-toggle="dropdown" >
-                    Order By
+                    Sort By
                 </button>
                 <ul class="dropdown-menu" >
-                    <li >
-                        <Link class="dropdown-item" href="/order/id/asc/tasks"> ID <i class="fas fa-arrow-up"></i></Link>
+                    <li>
+                        <Link class="dropdown-item" :href="`/order/price/asc/products`">Price Ascending</Link>
                     </li>
-                    <li >
-                        <Link class="dropdown-item" href="/order/id/desc/tasks"> ID <i class="fas fa-arrow-down"></i></Link>
+                    <li>
+                        <Link class="dropdown-item" :href="`/order/price/desc/products`">Price Descending</Link>
                     </li>
-                    <li >
-                        <Link class="dropdown-item"  href="/order/title/asc/tasks"> Title A-Z</Link>
+                    <li>
+                        <Link class="dropdown-item" :href="`/order/name/asc/products`">Name Ascending</Link>
                     </li>
-                    <li >
-                        <Link class="dropdown-item"  href="/order/title/desc/tasks"> Title Z-A</Link>
+                    <li>
+                        <Link class="dropdown-item" :href="`/order/name/desc/products`">Name Descending</Link>
                     </li>
+
 
                 </ul>
             </div>
