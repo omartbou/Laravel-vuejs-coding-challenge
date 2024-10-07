@@ -11,5 +11,7 @@ interface ProductRepositoryInterface {
     public function create($request);
     public function getProductByCategory(Category $category);
     public function sortBy($column,$direction);
+    public function delete($id);
+    public function update($id, array $data);
 
 }

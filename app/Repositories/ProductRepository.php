@@ -34,9 +34,11 @@ class ProductRepository implements ProductRepositoryInterface{
              $product->image = 'storage/' . $imagePath;
          }
         if($product->save()) {
-            if ($request->has('categories')) {
-                $product->categories()->attach($request->categories);
-            }
+                if ($request->has('selectedCategories')) {
+
+                    $product->categories()->attach($request->input('selectedCategories')); // Should accept array
+                }
+
         }
         return $product;
      }
@@ -57,5 +59,18 @@ class ProductRepository implements ProductRepositoryInterface{
         $products =Product::with('categories')->orderBy($column,$direction)->paginate(5);
         return $products;
 
+    }
+
+    public function update($id, array $data)
+    {
+        $products = $this->find($id);
+        $products->update($data);
+        return $products;
+    }
+
+    public function delete($id)
+    {
+        $products = $this->find($id);
+        return $products ? $products->delete() : false;
     }
 }
