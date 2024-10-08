@@ -60,12 +60,16 @@ class ProductController extends Controller
     }
 
 //Filter the product By Category
-    public function FilterByCategory(Category $category){
+    public function FilterByCategory(Category $category,Request $request){
         $categories = $this->categoryService->all();
            $products = $this->productService->getProductByCategory($category);
         return Inertia::render('Product/index',[
             'products' => $products,
-            'categories' =>$categories
+            'categories' =>$categories,
+             'flash' => [
+            'message' => $request->session()->get('message'),
+            'class' => $request->session()->get('class'),
+        ]
         ]);
     }
 
