@@ -6,17 +6,18 @@
                     Sort By
                 </button>
                 <ul class="dropdown-menu" >
+
                     <li>
-                        <Link class="dropdown-item" :href="`/order/price/asc/products`">Price Ascending</Link>
+                        <Link class="dropdown-item" :href="`/price/asc/`">Price Ascending</Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/order/price/desc/products`">Price Descending</Link>
+                        <Link class="dropdown-item" :href="`/price/desc/`">Price Descending</Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/order/name/asc/products`">Name Ascending</Link>
+                        <Link class="dropdown-item" :href="`/name/asc/`">Name Ascending</Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/order/name/desc/products`">Name Descending</Link>
+                        <Link class="dropdown-item" :href="`/name/desc/`">Name Descending</Link>
                     </li>
 
 

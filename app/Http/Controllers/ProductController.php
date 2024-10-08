@@ -6,24 +6,26 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
+use App\Services\CategoryService;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProductController extends Controller
 {
-    protected $productRepo;
-    protected $categoryRepo;
+    protected $productService;
+    protected $categoryService;
 
-    public function __construct(ProductRepositoryInterface $productRepo, CategoryRepositoryInterface $categoryRepo)
+    public function __construct(ProductService $productService, CategoryService $categoryService)
     {
-        $this->productRepo = $productRepo;
-        $this->categoryRepo = $categoryRepo;
+        $this->productService = $productService;
+        $this->categoryService = $categoryService;
     }
 //main page
     public function index()
     {
-        $products = $this->productRepo->all();
-        $categories = $this->categoryRepo->all();
+        $products = $this->productService->all();
+        $categories = $this->categoryService->all();
 
         return Inertia::render('Product/index', [
             'products' => $products,
@@ -33,7 +35,7 @@ class ProductController extends Controller
 //the creation form
     public function create()
     {
-        $categories = $this->categoryRepo->all();
+        $categories = $this->categoryService->all();
         return Inertia::render('Product/create', compact('categories'));
     }
 //save the product in database
@@ -45,13 +47,13 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'image' => 'required|image',
         ]);
-        $this->productRepo->create($request);
+        $this->productService->create($request);
         return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 //Filter the product By Category
     public function FilterByCategory(Category $category){
-        $categories = $this->categoryRepo->all();
-           $products = $this->productRepo->getProductByCategory($category);
+        $categories = $this->categoryService->all();
+           $products = $this->productService->getProductByCategory($category);
         return Inertia::render('Product/index',[
             'products' => $products,
             'categories' =>$categories
@@ -59,9 +61,9 @@ class ProductController extends Controller
     }
 //Sort The product By  price and name
     public function OrderBy($column,$direction){
-        $categories = $this->categoryRepo->all();
+        $categories = $this->categoryService->all();
 
-        $products=$this->productRepo->sortBy($column,$direction);
+        $products=$this->productService->sortBy($column,$direction);
         return Inertia::render('Product/index',[
             'products' => $products,
             'categories' =>$categories
