@@ -8,7 +8,9 @@
                 <ul class="dropdown-menu" >
                     <li><a class="dropdown-item" :href="route('products.index')">All</a></li>
                     <li v-for="category in categories" :key="category.id">
-                        <Link class="dropdown-item" :href="`/${category.id}`"> {{ category.name }}</Link>
+                        <Link class="dropdown-item" :href="route('category.product', category.id)">
+                            {{ category.name }}
+                        </Link>
                     </li>
                 </ul>
             </div>

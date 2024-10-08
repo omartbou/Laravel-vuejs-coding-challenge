@@ -8,16 +8,24 @@
                 <ul class="dropdown-menu" >
 
                     <li>
-                        <Link class="dropdown-item" :href="`/products?column=price&direction=asc`">Price Ascending <i class="fas fa-arrow-up"></i></Link>
+                        <Link class="dropdown-item" :href="route('products.index', { column: 'price', direction: 'asc' })">
+                            Price Ascending <i class="fas fa-arrow-up"></i>
+                        </Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/products?column=price&direction=desc`">Price Descending <i class="fas fa-arrow-down"> </i></Link>
+                        <Link class="dropdown-item" :href="route('products.index', { column: 'price', direction: 'desc' })">
+                            Price Descending <i class="fas fa-arrow-down"></i>
+                        </Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/products?column=name&direction=asc`">Name Ascending <i class="fas fa-arrow-up"></i></Link>
+                        <Link class="dropdown-item" :href="route('products.index', { column: 'name', direction: 'asc' })">
+                            Name Ascending <i class="fas fa-arrow-up"></i>
+                        </Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/products?column=name&direction=desc`">Name Descending <i class="fas fa-arrow-down"></i></Link>
+                        <Link class="dropdown-item" :href="route('products.index', { column: 'name', direction: 'desc' })">
+                            Name Descending <i class="fas fa-arrow-down"></i>
+                        </Link>
                     </li>
 
 
