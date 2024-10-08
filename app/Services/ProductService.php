@@ -27,7 +27,7 @@ class ProductService
         return $this->productRepo->getProductByCategory($category);
         }
 
-        public function delete($id): bool
+        public function delete(int $id): ?Product
         {
         return $this->productRepo->delete($id);
         }

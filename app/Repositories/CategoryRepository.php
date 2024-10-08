@@ -20,6 +20,14 @@ class CategoryRepository implements CategoryRepositoryInterface {
     {
         return Category::create($data);
     }
+    public function createCategory(string $name, ?int $parentId = null):Category
+    {
+        return Category::create([
+            'name' => $name,
+            'parent_id' => $parentId,
+        ]);
+    }
+
 
     public function update($id, array $data):?Category
     {
@@ -28,9 +36,14 @@ class CategoryRepository implements CategoryRepositoryInterface {
         return $category;
     }
 
-    public function delete($id):bool
+    public function delete(int $id):? Category
     {
-        $category = $this->find($id);
-        return $category ? $category->delete() : false;
+        $category = Category::find($id);
+
+        if ($category) {
+            $category->delete();
+        }
+
+        return $category;
     }
 }

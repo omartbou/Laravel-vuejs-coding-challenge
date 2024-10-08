@@ -23,7 +23,7 @@ class CategoryService
     }
 
 
-    public function delete($id): bool
+    public function deleteCategory(int $id): ?Category
     {
         return $this->categoryRepos->delete($id);
     }
@@ -31,6 +31,10 @@ class CategoryService
     public function all():Collection
     {
         return $this->categoryRepos->all();
+    }
+    public function createCategory(string $name, ?int $parentId = null): Category
+    {
+        return $this->categoryRepos->createCategory($name,$parentId);
     }
 
 }
