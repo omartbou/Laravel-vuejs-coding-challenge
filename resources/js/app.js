@@ -3,6 +3,7 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import VueDOMPurifyHTML from 'vue-dompurify-html';
 import MainLayout from '@/Pages/Layouts/MainLayouts.vue';
+import { ZiggyVue } from 'ziggy-js';
 
 
 createInertiaApp({
@@ -13,11 +14,15 @@ createInertiaApp({
 
         return page
     },
+
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(VueDOMPurifyHTML)
+            .use(ZiggyVue)
             .mount(el)
 
     },
+
 })
+

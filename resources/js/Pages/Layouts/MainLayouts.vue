@@ -11,7 +11,9 @@
                         <Link class="nav-link active" aria-current="page" href="/products"><i class="fas fa-home"></i>Home</Link>
                     </li>
                     <li class="nav-item">
-                        <Link class="nav-link" href="/products/create"><i class="fas fa-pencil"></i>Create Products</Link>
+                        <Link class="nav-link" :href="route('products.create')">
+                            <i class="fas fa-pencil"></i>Create Products
+                        </Link>
                     </li>
 
                 </ul>
@@ -23,6 +25,6 @@
 </template>
 <script setup>
 import { Link } from '@inertiajs/vue3'
-
+import { route } from 'ziggy-js';
 </script>
 <style></style>

@@ -16,6 +16,6 @@
 </head>
 <body class="bg-light">
 @inertia
-
+@routes
 </body>
 </html>
