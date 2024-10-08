@@ -3,7 +3,11 @@
         <div class="row my-5">
             <div class="col-md-9">
                 <div class="row">
+                    <div v-if="$page.props.flash.message" class="alert alert-success">
+                        {{ $page.props.flash.message }}
+                    </div>
                     <div class="col-12">
+
                         <h2 class="mb-4">Product List</h2>
                     </div>
 

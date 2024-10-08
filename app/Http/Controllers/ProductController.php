@@ -30,6 +30,10 @@ class ProductController extends Controller
         return Inertia::render('Product/index', [
             'products' => $products,
             'categories' => $categories,
+            'flash' => [
+                'message' => $request->session()->get('message'),
+                'class' => $request->session()->get('class'),
+                ]
         ]);
     }
 //the creation form
@@ -48,8 +52,13 @@ class ProductController extends Controller
             'image' => 'required|image',
         ]);
         $this->productService->create($request);
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('products.index')
+            ->with([
+                'message'=>'Product added successfully',
+                'class'=>'alert alert-success'
+            ]);
     }
+
 //Filter the product By Category
     public function FilterByCategory(Category $category){
         $categories = $this->categoryService->all();

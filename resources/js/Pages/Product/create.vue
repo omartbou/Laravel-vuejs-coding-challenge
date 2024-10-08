@@ -101,7 +101,7 @@ const createProduct = () => {
     formData.append('image', form.image);
     form.selectedCategories.forEach(id => formData.append('categories[]', id)); // Add categories
 
-    form.post('/products/store', { data: formData });
+    form.post('/products', { data: formData });
 };
 </script>
 
