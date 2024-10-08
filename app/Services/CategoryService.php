@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\ProductRepository;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryService
 {
@@ -15,18 +17,18 @@ class CategoryService
         $this->categoryRepos = $categoryRepos;
     }
 
-    public function create(array $data)
+    public function create(array $data): ?Category
     {
         return $this->categoryRepos->create($data);
     }
 
 
-    public function delete($id)
+    public function delete($id): bool
     {
         return $this->categoryRepos->delete($id);
     }
 
-    public function all()
+    public function all():Collection
     {
         return $this->categoryRepos->all();
     }

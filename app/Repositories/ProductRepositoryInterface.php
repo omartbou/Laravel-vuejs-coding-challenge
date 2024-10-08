@@ -3,14 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ProductRepositoryInterface {
 
-    public function all($request);
-    public function find($id);
-    public function create($request);
-    public function getProductByCategory(Category $category);
-    public function delete($id);
-    public function update($id, array $data);
+    public function all($request): LengthAwarePaginator;
+    public function find($id): ?Product;
+    public function create($request): ?Product;
+    public function getProductByCategory(Category $category):LengthAwarePaginator;
+    public function delete($id):bool;
+    public function update($id, array $data):?Product;
 
 }

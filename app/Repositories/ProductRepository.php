@@ -3,11 +3,12 @@ namespace App\Repositories;
 
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductRepository implements ProductRepositoryInterface{
 
 
-    public function all($request)
+    public function all($request): LengthAwarePaginator
     {
         $column = $request->query('column', 'default_column'); // Default column for sorting
         $direction = $request->query('direction', 'asc'); // Default sorting direction
@@ -24,12 +25,12 @@ class ProductRepository implements ProductRepositoryInterface{
 
     }
 
-    public function find($id)
+    public function find($id): ?Product
     {
         return Product::find($id);
     }
 
-    public function create($request)
+    public function create($request): ?Product
     {
      if($request){
          $product = new Product();
@@ -57,21 +58,21 @@ class ProductRepository implements ProductRepositoryInterface{
     }
 
 
-    public function getProductByCategory(Category $category){
+    public function getProductByCategory(Category $category): LengthAwarePaginator{
         $products = $category->products()->with('categories')->paginate(5);
         return $products;
 
     }
 
 
-    public function update($id, array $data)
+    public function update($id, array $data): ?Product
     {
         $products = $this->find($id);
         $products->update($data);
         return $products;
     }
 
-    public function delete($id)
+    public function delete($id): bool
     {
         $products = $this->find($id);
         return $products ? $products->delete() : false;
