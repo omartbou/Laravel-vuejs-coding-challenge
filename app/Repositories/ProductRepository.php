@@ -7,9 +7,20 @@ use App\Models\Product;
 class ProductRepository implements ProductRepositoryInterface{
 
 
-    public function all()
+    public function all($request)
     {
-        return Product::with('categories')->paginate(5);
+        $column = $request->query('column', 'default_column'); // Default column for sorting
+        $direction = $request->query('direction', 'asc'); // Default sorting direction
+
+        // Validate input
+        if (!in_array($column, ['name', 'price'])) {
+            $column = 'name'; // Fallback if invalid
+        }
+
+        if (!in_array($direction, ['asc', 'desc'])) {
+            $direction = 'asc'; // Fallback if invalid
+        }
+        return Product::with('categories')->orderBy($column, $direction)->paginate(5);
 
     }
 
@@ -51,15 +62,7 @@ class ProductRepository implements ProductRepositoryInterface{
         return $products;
 
     }
-    public function sortBy($column,$direction){
-        $validColumns = ['price', 'name'];
-        if (!in_array($column, $validColumns)) {
-            return redirect()->route('products.index');
-        }
-        $products =Product::with('categories')->orderBy($column,$direction)->paginate(5);
-        return $products;
 
-    }
 
     public function update($id, array $data)
     {

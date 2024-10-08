@@ -20,4 +20,3 @@ Route::get('/products/create', [ProductController::class,'create']);
 Route::post('/products/store', [ProductController::class,'store']);
 
 Route::get('/{category}',[ProductController::class,'FilterByCategory'])->name('category.product');
-Route::get('/{column}/{direction}/',[ProductController::class,'OrderBy'])->name('orderBy');

@@ -8,16 +8,16 @@
                 <ul class="dropdown-menu" >
 
                     <li>
-                        <Link class="dropdown-item" :href="`/price/asc/`">Price Ascending</Link>
+                        <Link class="dropdown-item" :href="`/products?column=price&direction=asc`">Price Ascending <i class="fas fa-arrow-up"></i></Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/price/desc/`">Price Descending</Link>
+                        <Link class="dropdown-item" :href="`/products?column=price&direction=desc`">Price Descending <i class="fas fa-arrow-down"> </i></Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/name/asc/`">Name Ascending</Link>
+                        <Link class="dropdown-item" :href="`/products?column=name&direction=asc`">Name Ascending <i class="fas fa-arrow-up"></i></Link>
                     </li>
                     <li>
-                        <Link class="dropdown-item" :href="`/name/desc/`">Name Descending</Link>
+                        <Link class="dropdown-item" :href="`/products?column=name&direction=desc`">Name Descending <i class="fas fa-arrow-down"></i></Link>
                     </li>
 
 

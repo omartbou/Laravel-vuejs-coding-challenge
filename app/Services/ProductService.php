@@ -31,16 +31,11 @@ class ProductService
         return $this->productRepo->delete($id);
         }
 
-        public function all()
+        public function all($request)
         {
-        return $this->productRepo->all();
+        return $this->productRepo->all($request);
         }
 
 
-        public function sortBy($column,$direction){
-            return $this->productRepo->sortBy($column,$direction);
-
-
-        }
 
 }

@@ -22,9 +22,9 @@ class ProductController extends Controller
         $this->categoryService = $categoryService;
     }
 //main page
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productService->all();
+        $products = $this->productService->all($request);
         $categories = $this->categoryService->all();
 
         return Inertia::render('Product/index', [
@@ -54,16 +54,6 @@ class ProductController extends Controller
     public function FilterByCategory(Category $category){
         $categories = $this->categoryService->all();
            $products = $this->productService->getProductByCategory($category);
-        return Inertia::render('Product/index',[
-            'products' => $products,
-            'categories' =>$categories
-        ]);
-    }
-//Sort The product By  price and name
-    public function OrderBy($column,$direction){
-        $categories = $this->categoryService->all();
-
-        $products=$this->productService->sortBy($column,$direction);
         return Inertia::render('Product/index',[
             'products' => $products,
             'categories' =>$categories

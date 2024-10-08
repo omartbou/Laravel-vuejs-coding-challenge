@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-3">
                 <Category :categories="categories"/>
-                <Sort :currentSort="currentSort"/>
+                <Sort :order="order"/>
             </div>
         </div>
     </div>
@@ -50,25 +50,16 @@ import Category from '@/Components/Category.vue'
 import Sort from '@/Components/Sort.vue'
 
 const props = defineProps({
-
-
     products: {
         type: Object,
-        required: true,
-        currentSort: String,
-
+        required: true
     },
     categories: {
         type: Array,
         required: true,
     },
-    currentSort: {
-        type: String,
-        required: true,
-    },
 
 });
-
 </script>
 
 <style>
