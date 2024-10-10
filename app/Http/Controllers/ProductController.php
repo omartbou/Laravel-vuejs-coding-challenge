@@ -36,9 +36,7 @@ class ProductController extends Controller
     // The creation form
     public function create()
     {
-        return $this->view('Product/create', [
-            'categories' => $this->categoryService->all(),
-        ]);
+        return $this->view('Product/create');
     }
 
     // Save the product in the database
