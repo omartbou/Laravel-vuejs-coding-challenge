@@ -18,14 +18,12 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->categoService->all();
-        return Inertia::render('Categories/Index', compact('categories'));
+        return $this->view('Categories/Index');
     }
 
     public function create()
     {
-        $categories = $this->categoService->all();
-        return Inertia::render('Categories/Create', compact('categories'));
+        return $this->view('Categories/Create');
     }
 
     public function store(Request $request)
@@ -33,5 +31,17 @@ class CategoryController extends Controller
         $request->validate(['name' => 'required|string|max:255']);
         $this->categoService->create($request->only('name', 'parent_id'));
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+    }
+
+    private function getAllCategories(){
+        $this->categoService->all();
+
+    }
+    public function view($view,$data=[]){
+
+        return Inertia::render($view, array_merge($data, [
+            'categories' => $this->getCategories(),
+        ]));
+
     }
 }
