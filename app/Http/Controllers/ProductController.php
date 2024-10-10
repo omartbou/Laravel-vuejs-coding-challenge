@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Product;
 use App\Repositories\CategoryRepositoryInterface;
-use App\Repositories\ProductRepositoryInterface;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -21,28 +19,29 @@ class ProductController extends Controller
         $this->productService = $productService;
         $this->categoryService = $categoryService;
     }
-//main page
+
+    // Main page
     public function index(Request $request)
     {
         $products = $this->productService->all($request);
-        $categories = $this->categoryService->all();
-
-        return Inertia::render('Product/index', [
+        return $this->view('Product/index', [
             'products' => $products,
-            'categories' => $categories,
             'flash' => [
                 'message' => $request->session()->get('message'),
                 'class' => $request->session()->get('class'),
-                ]
+            ],
         ]);
     }
-//the creation form
+
+    // The creation form
     public function create()
     {
-        $categories = $this->categoryService->all();
-        return Inertia::render('Product/create', compact('categories'));
+        return $this->view('Product/create', [
+            'categories' => $this->categoryService->all(),
+        ]);
     }
-//save the product in database
+
+    // Save the product in the database
     public function store(Request $request)
     {
         $request->validate([
@@ -51,26 +50,38 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'image' => 'required|image',
         ]);
-        $this->productService->create($request);
-        return redirect()->route('products.index')
-            ->with([
-                'message'=>'Product added successfully',
-                'class'=>'alert alert-success'
-            ]);
-    }
 
-//Filter the product By Category
-    public function FilterByCategory(Category $category,Request $request){
-        $categories = $this->categoryService->all();
-           $products = $this->productService->getProductByCategory($category);
-        return Inertia::render('Product/index',[
-            'products' => $products,
-            'categories' =>$categories,
-             'flash' => [
-            'message' => $request->session()->get('message'),
-            'class' => $request->session()->get('class'),
-        ]
+        $this->productService->create($request->validated()); // Use validated data for safety
+        return redirect()->route('products.index')->with([
+            'message' => 'Product added successfully',
+            'class' => 'alert alert-success',
         ]);
     }
 
+    // Filter the product by category
+    public function filterByCategory(Category $category, Request $request)
+    {
+        $products = $this->productService->getProductByCategory($category);
+        return $this->view('Product/index', [
+            'products' => $products,
+            'flash' => [
+                'message' => $request->session()->get('message'),
+                'class' => $request->session()->get('class'),
+            ],
+        ]);
     }
+
+    // Helper method to get categories
+    private function getCategories()
+    {
+        return $this->categoryService->all();
+    }
+
+    // Render view with categories
+    private function view($view, $data = [])
+    {
+        return Inertia::render($view, array_merge($data, [
+            'categories' => $this->getCategories(),
+        ]));
+    }
+}

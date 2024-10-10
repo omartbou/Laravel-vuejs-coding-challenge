@@ -40,7 +40,7 @@ class CategoryController extends Controller
     public function view($view,$data=[]){
 
         return Inertia::render($view, array_merge($data, [
-            'categories' => $this->getCategories(),
+            'categories' => $this->getAllCategories(),
         ]));
 
     }
